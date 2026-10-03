@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CheckCircle2, Phone } from 'lucide-react'
+import { Mail, Phone } from 'lucide-react'
 import { CLASSES, CONTACT, STATES } from '../../data/content'
 import Button from '../ui/Button'
 import Field, { INPUT_CLASS } from '../ui/Field'
@@ -7,11 +7,23 @@ import Reveal from '../animation/Reveal'
 import SectionHeading from '../ui/SectionHeading'
 
 export default function Enquire() {
-  const [submitted, setSubmitted] = useState(false)
+  const [emailDraft, setEmailDraft] = useState('')
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    setSubmitted(true)
+    const formData = new FormData(event.currentTarget)
+    const name = formData.get('name')
+    const details = [
+      `Name: ${name}`,
+      `Mobile: ${formData.get('phone')}`,
+      `Email: ${formData.get('email')}`,
+      `Class: ${formData.get('class')}`,
+      `State: ${formData.get('state')}`,
+    ].join('\n')
+
+    setEmailDraft(
+      `mailto:${CONTACT.email}?subject=${encodeURIComponent(`TIS admissions enquiry - ${name}`)}&body=${encodeURIComponent(details)}`,
+    )
   }
 
   return (
@@ -41,12 +53,24 @@ export default function Enquire() {
         </div>
 
         <Reveal delay={0.1} className="rounded-[2rem] bg-surface p-6 shadow-2xl sm:p-10">
-          {submitted ? (
+          {emailDraft ? (
             <div role="status" className="py-10 text-center">
-              <CheckCircle2 aria-hidden="true" className="mx-auto size-14 text-accent" />
-              <p className="mt-4 font-display text-3xl font-bold text-ink">Thank you!</p>
-              <p className="mt-2 text-muted">Our admissions team will get in touch with you shortly.</p>
-              <Button variant="outline" className="mt-6" onClick={() => setSubmitted(false)}>
+              <Mail aria-hidden="true" className="mx-auto size-14 text-accent" />
+              <p className="mt-4 font-display text-3xl font-bold text-ink">Your enquiry draft is ready</p>
+              <p className="mt-2 text-muted">
+                Open your email app, review the message, then press Send. This website does not send or save your details.
+              </p>
+              <Button href={emailDraft} arrow className="mt-6">
+                Open email app
+              </Button>
+              <p className="mt-4 text-sm text-muted">
+                If no email app opens, email{' '}
+                <a href={`mailto:${CONTACT.email}`} className="font-semibold text-ink underline underline-offset-4">
+                  {CONTACT.email}
+                </a>
+                {' '}or call {CONTACT.helplineDisplay}.
+              </p>
+              <Button variant="outline" className="mt-6" onClick={() => setEmailDraft('')}>
                 Send another enquiry
               </Button>
             </div>
@@ -89,9 +113,11 @@ export default function Enquire() {
               </label>
               <div className="sm:col-span-2">
                 <Button type="submit" className="w-full">
-                  Enquire Now
+                  Prepare email enquiry
                 </Button>
-                <p className="mt-3 text-center text-xs text-muted">Demo form for this redesign: submissions are not sent anywhere.</p>
+                <p className="mt-3 text-center text-xs text-muted">
+                  Your email app will open with your enquiry ready. Review it and press Send to contact admissions.
+                </p>
               </div>
             </form>
           )}
