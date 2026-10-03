@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: 250 248 243;
+    --surface: 255 255 255;
+    --ink: 12 24 56;
+    --muted: 82 92 115;
+    --brand: 11 31 75;
+    --accent: 245 184 0;
+  }
+
+  .dark {
+    --bg: 8 14 32;
+    --surface: 17 28 58;
+    --ink: 244 245 250;
+    --muted: 160 170 195;
+    --brand: 24 44 98;
+    --accent: 245 184 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 7rem;
+  }
+
+  body {
+    @apply bg-bg font-sans text-ink antialiased transition-colors duration-500;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  .skip-link {
+    @apply fixed left-4 top-4 z-[120] -translate-y-24 rounded-full bg-accent px-5 py-3 font-semibold text-navy transition-transform focus:translate-y-0;
+  }
+
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+  }
+
+  .section-pad {
+    @apply py-20 sm:py-28;
+  }
+}
+
+/* Native cursor is hidden only while the custom cursor is mounted (fine pointers). */
+.custom-cursor,
+.custom-cursor a,
+.custom-cursor button,
+.custom-cursor label,
+.custom-cursor select {
+  cursor: none;
+}
+
+.custom-cursor input,
+.custom-cursor textarea {
+  cursor: text;
+}
+
+.scrollbar-hidden {
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
