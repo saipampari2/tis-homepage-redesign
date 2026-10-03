@@ -9,19 +9,11 @@ A Vite + React landing page for Tulas International School, built as a single-pa
 
 ## Tech Stack
 
-- React 18
-- Vite 5
+- React
+- Vite
 - Tailwind CSS
 - Framer Motion
 - Lucide React
-
-## Highlights
-
-- Custom cursor on devices with a fine pointer; touch devices keep the native cursor.
-- Scroll-triggered section reveals and staggered card entrances.
-- Persistent light/dark theme toggle.
-- Animated reading-progress bar.
-- Responsive navigation, keyboard dismissal, reduced-motion support, and an accessible skip link.
 
 ## Actual Project Structure Used
 
@@ -58,7 +50,6 @@ src/
 │   │   ├── Recognition.jsx
 │   │   ├── Community.jsx
 │   │   ├── Testimonials.jsx
-│   │   ├── ReviewCarousel.jsx
 │   │   └── Enquire.jsx
 │   └── ui/
 │       ├── Badge.jsx
@@ -70,6 +61,7 @@ src/
 │       └── SectionHeading.jsx
 ├── styles/
 │   └── index.css
+└──
 ```
 
 ## What the app actually uses
@@ -89,10 +81,10 @@ npm install
 npm run dev
 ```
 
-The development server is configured to use port `3000`:
+Then open the Vite URL shown in the terminal, usually:
 
 ```bash
-http://localhost:3000
+http://localhost:5173
 ```
 
 ## Production Build
@@ -102,15 +94,6 @@ npm run build
 npm run preview
 ```
 
-## Deploying to Vercel
-
-1. Push this repository to GitHub and import it in [Vercel](https://vercel.com/new).
-2. Keep the project root as the repository root and select **Vite** if Vercel does not detect it automatically.
-3. Use `npm run build` as the build command and `dist` as the output directory.
-4. Deploy. No environment variables are required.
-
-For a local production check, run `npm run build` and then `npm run preview`.
-
 ## Notes
 
-This is a frontend-only redesign. The enquiry form prepares an email addressed to the school contact in the visitor's configured email app. Visitors review the message and send it themselves; this site does not transmit or store their details. A backend email service would be needed for automatic submission.
+This is a front-end homepage redesign and not a full backend application. The design is content-driven and structured around reusable section components and shared motion utilities.
