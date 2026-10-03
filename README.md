@@ -1,88 +1,99 @@
-# Tulas International School (TIS) - Homepage Redesign
+# Tulas International School Homepage Redesign
 
-A modern, animated redesign of the Tulas International School homepage focusing on high conversion, fluid animations, and mobile responsiveness. Copy, contact details, statistics, rankings and parent reviews are retained from [tis.edu.in](https://tis.edu.in/).
+A Vite + React landing page for Tulas International School, built as a single-page homepage with motion effects, responsive navigation, and a dark/light theme switcher.
 
-## 🚀 Live Demo
-- **Live URL:** _add your Vercel / Netlify link here after deploying_
-- **Repository:** _add your GitHub repo link here_
+## Live Demo
 
-## 🛠️ Tech Stack
-- **Framework:** React 18 + Vite 5
-- **Styling:** Tailwind CSS 3 (design tokens as CSS variables)
-- **Animations:** Framer Motion
-- **Icons:** Lucide React
-- **Deployment:** Vercel / Netlify / GitHub Pages (static build, no server needed)
+- Website: https://tis-homepage-redesign-omega.vercel.app/
+- Repository: https://github.com/saipampari2/tis-homepage-redesign
 
-## ✨ Standout Features Implemented
-All four optional features are implemented:
+## Tech Stack
 
-1. **Custom Cursor** (`components/animation/CustomCursor.jsx`): a spring-smoothed ring plus a dot. The ring scales up and tints over links, buttons and form controls. It mounts only on `(hover: hover) and (pointer: fine)` devices, so touch screens never get it. Pointer position lives in motion values, so mouse movement causes zero React re-renders.
-2. **Scroll-Triggered Reveals** (`Reveal.jsx`, `Stagger.jsx`): `whileInView` with `viewport={{ once: true }}`. Entrance durations are 0.45–0.5s, and card grids stagger by 80ms.
-3. **Animated Dark/Light Theme Switcher** (`ThemeToggle.jsx`, `hooks/useTheme.js`): a sliding-knob switch with a rotating sun/moon swap. The choice is saved in `localStorage` and defaults to the system preference. An inline script in `index.html` applies the theme before first paint, so there is no flash.
-4. **Scroll Progress Bar** (`ScrollProgress.jsx`, `hooks/useScrollProgress.js`): `useScroll` smoothed with `useSpring`, driving a `scaleX` transform.
+- React
+- Vite
+- Tailwind CSS
+- Framer Motion
+- Lucide React
 
-Also: parallax photo collage in the hero, count-up stats (`Counter.jsx`, driven by motion values), an infinite marquee, an auto-rotating review carousel that pauses on hover/focus, and a scroll-snap personalities rail.
-
-All motion respects `prefers-reduced-motion`.
-
-## 📦 Getting Started Locally
-
-Requires Node.js 18+.
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/your-username/tis-homepage-redesign.git
-   cd tis-homepage-redesign
-   ```
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-3. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
-4. Open http://localhost:3000 in your browser.
-
-Other scripts:
+## Actual Project Structure Used
 
 ```bash
-npm run build     # production build into dist/
-npm run preview   # serve the production build locally
-```
-
-## 🌍 Deployment
-
-- **Vercel:** import the repo. Framework preset "Vite", build command `npm run build`, output directory `dist`.
-- **Netlify:** build command `npm run build`, publish directory `dist`.
-- **GitHub Pages:** set `base: '/<repo-name>/'` in `vite.config.js`, run `npm run build`, and publish `dist/` (for example with the `gh-pages` branch or a Pages workflow).
-
-## Component Architecture Overview
-
-```
 src/
+├── App.jsx
+├── main.jsx
+├── data/
+│   └── content.js
+├── hooks/
+│   ├── useTheme.js
+│   ├── useScrolled.js
+│   ├── useMediaQuery.js
+│   ├── useMousePosition.js
+│   ├── useHoverTarget.js
+│   └── useScrollProgress.js
 ├── components/
-│   ├── ui/          # Button, Badge, SectionHeading, Photo, Counter, Field, Marquee
-│   ├── layout/      # Navbar, MobileNav, Footer
-│   ├── sections/    # Hero, About, CampusStats, Sports, Recognition, Community,
-│   │                # Testimonials (+ ReviewCarousel), Enquire
-│   └── animation/   # CustomCursor, ScrollProgress, ThemeToggle, Reveal, Stagger, variants
-├── hooks/           # useTheme, useScrolled, useMediaQuery, useMousePosition,
-│                    # useHoverTarget, useScrollProgress
-├── data/            # content.js - nav items, stats, sports, rankings, reviews, contact
-└── styles/          # index.css - Tailwind layers, theme tokens
+│   ├── animation/
+│   │   ├── CustomCursor.jsx
+│   │   ├── Reveal.jsx
+│   │   ├── ScrollProgress.jsx
+│   │   ├── Stagger.jsx
+│   │   ├── ThemeToggle.jsx
+│   │   └── variants.js
+│   ├── layout/
+│   │   ├── Navbar.jsx
+│   │   ├── MobileNav.jsx
+│   │   └── Footer.jsx
+│   ├── sections/
+│   │   ├── Hero.jsx
+│   │   ├── About.jsx
+│   │   ├── CampusStats.jsx
+│   │   ├── Sports.jsx
+│   │   ├── Recognition.jsx
+│   │   ├── Community.jsx
+│   │   ├── Testimonials.jsx
+│   │   └── Enquire.jsx
+│   └── ui/
+│       ├── Badge.jsx
+│       ├── Button.jsx
+│       ├── Counter.jsx
+│       ├── Field.jsx
+│       ├── Marquee.jsx
+│       ├── Photo.jsx
+│       └── SectionHeading.jsx
+├── styles/
+│   └── index.css
+└──
 ```
 
-Notes for review:
-- **Theme tokens** are RGB CSS variables (`--bg`, `--ink`, `--brand`, ...) mapped in `tailwind.config.js`, so every utility such as `bg-surface` or `text-ink/60` flips with the `.dark` class.
-- **Performance:** scroll- and pointer-driven values (progress bar, cursor, parallax, counters) use Framer Motion motion values, so they animate without re-rendering React components. `useScrolled` only re-renders when its boolean flips.
-- **Accessibility:** semantic landmarks (`header`, `nav`, `main`, `section`, `footer`), skip link, labelled controls, `aria-*` on the switch, menu and carousel, 44–48px touch targets, Escape closes the mobile menu.
+## What the app actually uses
 
-## Brand Identity Retained
+- `App.jsx` composes the homepage and renders the main landing-page sections.
+- `content.js` stores the school text, stats, rankings, testimonials, and contact data.
+- `useTheme.js` handles the persisted light/dark mode.
+- `Navbar` and `MobileNav` power the responsive navigation.
+- `CustomCursor`, `ScrollProgress`, `Reveal`, and `Stagger` add motion and scroll-based animation effects.
+- `Hero`, `About`, `CampusStats`, `Sports`, `Recognition`, `Community`, `Testimonials`, and `Enquire` are the main homepage sections.
+- `Button`, `SectionHeading`, `Counter`, `Badge`, `Photo`, `Field`, and `Marquee` are used in the UI.
 
-- Navy and gold palette, school name, tagline copy, statistics (22 acre campus, 16+ sports, 24×7 medical, 6:1 ratio), rankings, notable alumni/visitors, parent reviews, contact details and policy links from the official site.
+## Getting Started
 
-## Known limitations
+```bash
+npm install
+npm run dev
+```
 
-- The enquiry form is a front-end demo. It validates but does not send data anywhere (the original uses OTP verification, which needs a backend).
-- Photos are loaded from tis.edu.in; if they fail to load, branded fallback tiles are shown. For production, download and self-host them.
+Then open the Vite URL shown in the terminal, usually:
+
+```bash
+http://localhost:5173
+```
+
+## Production Build
+
+```bash
+npm run build
+npm run preview
+```
+
+## Notes
+
+This is a front-end homepage redesign and not a full backend application. The design is content-driven and structured around reusable section components and shared motion utilities.
